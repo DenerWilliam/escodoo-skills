@@ -2,18 +2,9 @@ import { readFileSync, mkdirSync, writeFileSync, existsSync, readdirSync } from 
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 
-function getCliDir(): string {
-  const cliPath = process.argv[1];
-  if (cliPath && cliPath.startsWith("/")) {
-    return dirname(cliPath);
-  }
-  return process.cwd();
-}
-
-function getSkillsDir(): string {
-  const cliDir = getCliDir();
-  return join(cliDir, "..", "src", "skills");
-}
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const SKILLS_DIR = join(__dirname, "..", "src", "skills");
 
 export interface Skill {
   name: string;
@@ -22,11 +13,10 @@ export interface Skill {
 }
 
 export function getSkills(): Skill[] {
-  const skillsDir = getSkillsDir();
-  const files = readdirSync(skillsDir).filter((f) => f.endsWith(".md"));
+  const files = readdirSync(SKILLS_DIR).filter((f) => f.endsWith(".md"));
   return files.map((file) => {
     const name = file.replace(".md", "");
-    const content = readFileSync(join(skillsDir, file), "utf-8");
+    const content = readFileSync(join(SKILLS_DIR, file), "utf-8");
     const descriptionMatch = content.match(/^#\s+(.+)/);
     const description = descriptionMatch ? descriptionMatch[1] : name;
     return { name, description, content };
