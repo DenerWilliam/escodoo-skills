@@ -12,15 +12,17 @@ echo "🔧 Installing @escodoo/skills..."
 if [ -d "$INSTALL_DIR/.git" ]; then
     echo "📦 Updating existing installation..."
     cd "$INSTALL_DIR"
-    git pull
+    git pull origin main
 else
     echo "📦 Cloning repository..."
     git clone https://github.com/DenerWilliam/escodoo-skills.git "$INSTALL_DIR"
+    cd "$INSTALL_DIR"
 fi
 
 # Install dependencies and build
-cd "$INSTALL_DIR"
+echo "📦 Installing dependencies..."
 npm install
+echo "📦 Building..."
 npm run build
 
 # Create bin directory in PATH
@@ -57,8 +59,8 @@ echo "To use, run:"
 echo "  source $PROFILE_FILE"
 echo "  escodoo-skills opencode"
 echo ""
-echo "To update later:"
-echo "  cd $INSTALL_DIR && git pull"
+echo "To update later, just run this script again:"
+echo "  curl -fsSL https://raw.githubusercontent.com/DenerWilliam/escodoo-skills/main/install.sh | bash"
 echo ""
 echo "To uninstall:"
 echo "  curl -fsSL https://raw.githubusercontent.com/DenerWilliam/escodoo-skills/main/uninstall.sh | bash"
