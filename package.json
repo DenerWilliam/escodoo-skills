@@ -1,0 +1,38 @@
+{
+  "name": "@escodoo/skills",
+  "version": "1.0.0",
+  "description": "Escodoo skills for opencode, Claude Code, and Cursor",
+  "type": "module",
+  "bin": {
+    "escodoo-skills": "./dist/cli.js"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "src/skills"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "opencode",
+    "claude",
+    "cursor",
+    "skills",
+    "escodoo",
+    "odoo"
+  ],
+  "author": "Escodoo",
+  "license": "MIT",
+  "devDependencies": {
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0"
+  }
+}
