@@ -24,7 +24,7 @@ A multi-platform skill library that installs development conventions for differe
 
 ## Quick Start
 
-### Install
+### Linux / Mac
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/DenerWilliam/escodoo-skills/main/install.sh | bash
@@ -33,6 +33,14 @@ curl -fsSL https://raw.githubusercontent.com/DenerWilliam/escodoo-skills/main/in
 After install, restart your terminal or run:
 ```bash
 source ~/.bashrc
+```
+
+### Windows
+
+Open PowerShell as Administrator and run:
+
+```powershell
+irm https://raw.githubusercontent.com/DenerWilliam/escodoo-skills/main/install.ps1 | iex
 ```
 
 ### Use
@@ -54,13 +62,21 @@ escodoo-skills all ./my-odoo-project
 Just run the install script again — it will update automatically:
 
 ```bash
+# Linux/Mac
 curl -fsSL https://raw.githubusercontent.com/DenerWilliam/escodoo-skills/main/install.sh | bash
+
+# Windows (PowerShell as Admin)
+irm https://raw.githubusercontent.com/DenerWilliam/escodoo-skills/main/install.ps1 | iex
 ```
 
 ### Uninstall
 
 ```bash
+# Linux/Mac
 curl -fsSL https://raw.githubusercontent.com/DenerWilliam/escodoo-skills/main/uninstall.sh | bash
+
+# Windows (PowerShell as Admin)
+irm https://raw.githubusercontent.com/DenerWilliam/escodoo-skills/main/uninstall.ps1 | iex
 ```
 
 ## Development
