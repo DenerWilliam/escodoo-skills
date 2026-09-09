@@ -24,33 +24,50 @@ A multi-platform skill library that installs development conventions for differe
 
 ## Quick Start
 
-```bash
-# Install from GitHub
-npm install github:escodoo/skills
+### Install
 
-# Install skills in current directory
+```bash
+curl -fsSL https://raw.githubusercontent.com/DenerWilliam/escodoo-skills/main/install.sh | bash
+```
+
+After install, restart your terminal or run:
+```bash
+source ~/.bashrc
+```
+
+### Use
+
+```bash
 escodoo-skills opencode    # Opencode only
 escodoo-skills claude      # Claude Code only
 escodoo-skills cursor      # Cursor only
 escodoo-skills all         # All AIs
 ```
 
-Or use a specific target directory:
-
+Or install in a specific directory:
 ```bash
 escodoo-skills all ./my-odoo-project
 ```
 
-### Alternative Install Methods
+### Update
 
 ```bash
-# Full git URL
-npm install git+https://github.com/escodoo/skills.git
+cd ~/.escodoo-skills && git pull
+```
 
-# With specific version/tag
-npm install github:escodoo/skills#v1.0.0
+### Uninstall
 
-# After npm publish: install globally via npm
+```bash
+curl -fsSL https://raw.githubusercontent.com/DenerWilliam/escodoo-skills/main/uninstall.sh | bash
+```
+
+### Alternative: GitHub Packages (for teams)
+
+If you're part of the Escodoo team, you can install via GitHub Packages:
+
+See [GITHUB_PACKAGES.md](GITHUB_PACKAGES.md) for setup instructions.
+
+```bash
 npm install -g @escodoo/skills
 ```
 
@@ -58,8 +75,8 @@ npm install -g @escodoo/skills
 
 ```bash
 # Clone the repo
-git clone https://github.com/escodoo/skills.git
-cd skills
+git clone https://github.com/DenerWilliam/escodoo-skills.git
+cd escodoo-skills
 
 # Install dependencies
 npm install
@@ -107,11 +124,14 @@ No frontmatter is needed in source files — frontmatter is generated during con
 
 ## Publishing
 
+Publishing is done via GitHub Actions when a version tag is pushed:
+
 ```bash
-npm run build
 npm version patch|minor|major
-npm publish --access public
+git push --tags
 ```
+
+This triggers the `publish-github` job in the CI workflow. See [GITHUB_PACKAGES.md](GITHUB_PACKAGES.md) for setup.
 
 ## Contributing
 

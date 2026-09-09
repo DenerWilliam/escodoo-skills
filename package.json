@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Escodoo skills for opencode, Claude Code, and Cursor",
   "type": "module",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  },
   "bin": {
     "escodoo-skills": "./dist/cli.js"
   },
@@ -11,7 +15,10 @@
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
-    "src/skills"
+    "bin",
+    "src/skills",
+    "install.sh",
+    "uninstall.sh"
   ],
   "scripts": {
     "build": "tsup",
