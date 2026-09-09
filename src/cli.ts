@@ -1,14 +1,7 @@
-#!/usr/bin/env node
-
 import chalk from "chalk";
-import { installOpencode, getSkills } from "./converters/opencode.js";
-import { installClaude } from "./converters/claude.js";
-import { installCursor } from "./converters/cursor.js";
-import { join } from "path";
+import { installOpencode, getSkills, installClaude, installCursor } from "./converters/opencode.js";
 
-const SKILLS = getSkills();
-
-function showHelp() {
+function showHelp(skills: ReturnType<typeof getSkills>) {
   console.log(`
 ${chalk.cyan("🔧 Escodoo Skills Installer")}
 
@@ -27,15 +20,15 @@ ${chalk.yellow("Examples:")}
   escodoo-skills all
 
 ${chalk.yellow("Skills available:")}
-${SKILLS.map((s) => `  - ${chalk.blue(s.name)}: ${s.description}`).join("\n")}
+${skills.map((s) => `  - ${chalk.blue(s.name)}: ${s.description}`).join("\n")}
 `);
 }
 
-async function main() {
+function main() {
   const args = process.argv.slice(2);
 
   if (args.includes("--help") || args.includes("-h") || args.length === 0) {
-    showHelp();
+    showHelp(getSkills());
     return;
   }
 
@@ -44,9 +37,11 @@ async function main() {
 
   if (!["opencode", "claude", "cursor", "all"].includes(ai)) {
     console.error(chalk.red(`\n❌ Unknown AI: "${ai}"\n`));
-    showHelp();
+    showHelp(getSkills());
     process.exit(1);
   }
+
+  const SKILLS = getSkills();
 
   console.log(chalk.cyan(`\n🔧 Installing skills for ${chalk.bold(ai)} in ${chalk.dim(targetDir)}\n`));
 

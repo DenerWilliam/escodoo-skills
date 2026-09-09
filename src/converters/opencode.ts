@@ -2,7 +2,18 @@ import { readFileSync, mkdirSync, writeFileSync, existsSync, readdirSync } from 
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 
-const SKILLS_DIR = join(process.cwd(), "src", "skills");
+function getCliDir(): string {
+  const cliPath = process.argv[1];
+  if (cliPath && cliPath.startsWith("/")) {
+    return dirname(cliPath);
+  }
+  return process.cwd();
+}
+
+function getSkillsDir(): string {
+  const cliDir = getCliDir();
+  return join(cliDir, "..", "src", "skills");
+}
 
 export interface Skill {
   name: string;
@@ -11,10 +22,11 @@ export interface Skill {
 }
 
 export function getSkills(): Skill[] {
-  const files = readdirSync(SKILLS_DIR).filter((f) => f.endsWith(".md"));
+  const skillsDir = getSkillsDir();
+  const files = readdirSync(skillsDir).filter((f) => f.endsWith(".md"));
   return files.map((file) => {
     const name = file.replace(".md", "");
-    const content = readFileSync(join(SKILLS_DIR, file), "utf-8");
+    const content = readFileSync(join(skillsDir, file), "utf-8");
     const descriptionMatch = content.match(/^#\s+(.+)/);
     const description = descriptionMatch ? descriptionMatch[1] : name;
     return { name, description, content };
@@ -51,4 +63,37 @@ description: ${skill.description}
   if (!existsSync(configPath)) {
     writeFileSync(configPath, JSON.stringify(opencodeConfig, null, 2) + "\n");
   }
+}
+
+export function installClaude(targetDir: string, skills: Skill[]): void {
+  const outputDir = join(targetDir, ".claude", "commands");
+
+  mkdirSync(outputDir, { recursive: true });
+
+  skills.forEach((skill) => {
+    const frontmatter = `---
+description: ${skill.description}
+---
+
+# ${skill.content}
+`;
+    writeFileSync(join(outputDir, `${skill.name}.md`), frontmatter);
+  });
+}
+
+export function installCursor(targetDir: string, skills: Skill[]): void {
+  const outputDir = join(targetDir, ".cursor", "rules");
+
+  mkdirSync(outputDir, { recursive: true });
+
+  skills.forEach((skill) => {
+    const frontmatter = `---
+description: ${skill.description}
+alwaysApply: true
+---
+
+# ${skill.content}
+`;
+    writeFileSync(join(outputDir, `${skill.name}.mdc`), frontmatter);
+  });
 }
