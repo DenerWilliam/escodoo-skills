@@ -51,24 +51,16 @@ escodoo-skills all ./my-odoo-project
 
 ### Update
 
+Just run the install script again — it will update automatically:
+
 ```bash
-cd ~/.escodoo-skills && git pull
+curl -fsSL https://raw.githubusercontent.com/DenerWilliam/escodoo-skills/main/install.sh | bash
 ```
 
 ### Uninstall
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/DenerWilliam/escodoo-skills/main/uninstall.sh | bash
-```
-
-### Alternative: GitHub Packages (for teams)
-
-If you're part of the Escodoo team, you can install via GitHub Packages:
-
-See [GITHUB_PACKAGES.md](GITHUB_PACKAGES.md) for setup instructions.
-
-```bash
-npm install -g @escodoo/skills
 ```
 
 ## Development
@@ -85,28 +77,26 @@ npm install
 npm run build
 
 # Test the CLI locally
-npm link
 escodoo-skills all ./test-project
 ```
 
 ## Project Structure
 
 ```
-@escodoo/skills/
+escodoo-skills/
 ├── src/
 │   ├── skills/           # Markdown content (source of truth)
 │   │   ├── commit-messages.md
 │   │   ├── doodba-project.md
 │   │   └── ...
 │   ├── converters/       # Format converters
-│   │   ├── opencode.ts
-│   │   ├── claude.ts
-│   │   └── cursor.ts
+│   │   └── opencode.ts   # (opencode, claude, cursor)
 │   ├── cli.ts           # CLI entry point
 │   └── index.ts
-├── package.json
-├── tsup.config.ts
-└── tsconfig.json
+├── bin/                 # CLI launcher
+├── install.sh           # Installation script
+├── uninstall.sh         # Uninstallation script
+└── package.json
 ```
 
 ## Adding New Skills
@@ -121,17 +111,6 @@ Quick summary:
 4. Open a PR
 
 No frontmatter is needed in source files — frontmatter is generated during conversion.
-
-## Publishing
-
-Publishing is done via GitHub Actions when a version tag is pushed:
-
-```bash
-npm version patch|minor|major
-git push --tags
-```
-
-This triggers the `publish-github` job in the CI workflow. See [GITHUB_PACKAGES.md](GITHUB_PACKAGES.md) for setup.
 
 ## Contributing
 
