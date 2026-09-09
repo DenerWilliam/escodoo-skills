@@ -25,8 +25,8 @@ A multi-platform skill library that installs development conventions for differe
 ## Quick Start
 
 ```bash
-# Install globally
-npm install -g @escodoo/skills
+# Install from GitHub
+npm install github:escodoo/skills
 
 # Install skills in current directory
 escodoo-skills opencode    # Opencode only
@@ -39,6 +39,19 @@ Or use a specific target directory:
 
 ```bash
 escodoo-skills all ./my-odoo-project
+```
+
+### Alternative Install Methods
+
+```bash
+# Full git URL
+npm install git+https://github.com/escodoo/skills.git
+
+# With specific version/tag
+npm install github:escodoo/skills#v1.0.0
+
+# After npm publish: install globally via npm
+npm install -g @escodoo/skills
 ```
 
 ## Development
