@@ -6,7 +6,7 @@ function showHelp(skills: ReturnType<typeof getSkills>) {
 ${chalk.cyan("🔧 Escodoo Skills Installer")}
 
 ${chalk.yellow("Usage:")}
-  escodoo-skills <ai> [target-dir]
+  escodoo-skills <ai> <target-dir>
 
 ${chalk.yellow("AIs:")}
   opencode   - Install skills for Opencode
@@ -15,9 +15,9 @@ ${chalk.yellow("AIs:")}
   all        - Install for all AIs
 
 ${chalk.yellow("Examples:")}
-  escodoo-skills opencode
+  escodoo-skills opencode .
   escodoo-skills claude ./my-project
-  escodoo-skills all
+  escodoo-skills all .
 
 ${chalk.yellow("Skills available:")}
 ${skills.map((s) => `  - ${chalk.blue(s.name)}: ${s.description}`).join("\n")}
@@ -33,7 +33,13 @@ function main() {
   }
 
   const ai = args[0]?.toLowerCase();
-  const targetDir = args[1] || process.cwd();
+  const targetDir = args[1];
+
+  if (!targetDir) {
+    console.error(chalk.red("\n❌ Error: target directory is required\n"));
+    showHelp(getSkills());
+    process.exit(1);
+  }
 
   if (!["opencode", "claude", "cursor", "all"].includes(ai)) {
     console.error(chalk.red(`\n❌ Unknown AI: "${ai}"\n`));
